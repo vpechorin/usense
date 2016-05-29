@@ -21,11 +21,11 @@
 ## Usage
 
 ```java
-    // This will create usense instance, send registeration message and perform initial browse lookup
-    // servicename - is the name of your service (String)
-    // localhost - your service hostname/address (String)
-    // 8081 - your service port (int)
-    // nats://localhost:4222 - NATS message broker address
+    // This will create usense instance, send registration message and perform initial browse lookup
+    // `servicehnd` - is the name of your service (String)
+    // `localhost` - your service hostname/address (String)
+    // `8081` - your service port (int)
+    // `nats://localhost:4222` - NATS message broker address
     Usense usense = Usense.newClient("servicehnd", "localhost", 8081, "nats://localhost:4222");
 
     // Find the one service
