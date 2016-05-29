@@ -32,6 +32,7 @@ targetCompatibility = 1.8
 jar {
     baseName = 'usense'
     version = "$version"
+	from "LICENSE.txt"
 }
 
 sourceSets.main.java.srcDirs = []
@@ -55,4 +56,16 @@ dependencies {
 	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.4.1'
+}
+
+test {
+	exclude '**/*IntegrationTest.class'
+	reports.html.destination = file ("$reports.html.destination/unit")
+	reports.junitXml.destination = file("$reports.junitXml.destination/unit")
+}
+
+task integrationTest(type: Test) {
+	include '**/*IntegrationTest.class'
+	reports.html.destination = file ("$reports.html.destination/integration")
+	reports.junitXml.destination = file("$reports.junitXml.destination/integration")
 }
