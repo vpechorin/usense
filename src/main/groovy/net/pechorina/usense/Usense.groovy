@@ -82,7 +82,7 @@ class Usense {
             try {
                 ServiceInstance serviceInstance = ServiceInstance.fromString(messageText)
                 if (serviceInstance)
-                    registry.add(serviceInstance)
+                    registry.addOrUpdate(serviceInstance)
             }
             catch (IllegalArgumentException ex) {
                 log.warn("[u${id}] Received an incorrect message |${messageText}|", ex)
@@ -142,7 +142,6 @@ class Usense {
         log.debug("[u${id}] Broadcast discover attempt")
 
         long start = System.nanoTime()
-        String messageText = null
         try {
             nats.publish("discovery.browse", "*".bytes)
         }
