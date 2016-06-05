@@ -22,9 +22,20 @@ class RegistryIntegrationTest {
     }
 
     @Test
+    public void resolveUnknownTest() {
+        Usense u = Usense.newClient("service1", "srv1", 8080, "nats://localhost:4222")
+
+        ServiceInstance instance = u.resolve("service2")
+
+        assertThat(instance).isNull()
+    }
+
+    @Test
     public void browseTest() {
         Usense u1 = Usense.newClient("service1", "srv1", 8080, "nats://localhost:4222")
-        Usense u2 = Usense.newClient("service2", "srv2", 8081, "nats://localhost:4222")
+
+        Usense.newClient("service2", "srv2", 8081, "nats://localhost:4222")
+        Usense.newClient("service3", "srv3", 8082, "nats://localhost:4222")
 
         u1.browse()
 

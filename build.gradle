@@ -11,6 +11,7 @@ plugins {
 	id 'pl.allegro.tech.build.axion-release' version '1.3.4'
 }
 
+apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
@@ -35,9 +36,6 @@ jar {
 	from "LICENSE.txt"
 }
 
-sourceSets.main.java.srcDirs = []
-sourceSets.main.groovy.srcDirs += ["src/main/java"]
-
 test {
 	// show standard out and standard error of the test JVM(s) on the console
 	testLogging.showStandardStreams = true
@@ -52,7 +50,7 @@ repositories {
 dependencies {
 	compile 'io.nats:jnats:0.4.1'
 	compile 'org.slf4j:slf4j-api:1.7.21'
-	compile 'org.codehaus.groovy:groovy-all:2.4.6:indy'
+	testCompile 'org.codehaus.groovy:groovy-all:2.4.6:indy'
 	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.4.1'
