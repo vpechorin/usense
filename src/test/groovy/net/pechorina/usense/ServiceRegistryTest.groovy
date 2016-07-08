@@ -6,9 +6,6 @@ import java.time.LocalDateTime
 
 import static org.assertj.core.api.Assertions.assertThat
 
-/**
- * Created by victor on 22/05/16.
- */
 class ServiceRegistryTest {
 
     String s1 = "123:test1:localhost:11111"

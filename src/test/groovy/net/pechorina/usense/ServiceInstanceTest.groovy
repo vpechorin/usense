@@ -3,9 +3,7 @@ package net.pechorina.usense
 import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
-/**
- * Created by victor on 28/05/16.
- */
+
 class ServiceInstanceTest {
 
     @Test

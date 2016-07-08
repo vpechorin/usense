@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class ServiceRegistry {
     private static final Logger log = LoggerFactory.getLogger(ServiceRegistry.class);
 
-    private long EXPIRE_TIME_SEC = 300L;  // 5min
-    private long EXPIRE_TIMER_INITIAL_DELAY = 300L;  // 5min
+    private long EXPIRE_TIME_SEC = 900L;  // 15 min
+    private long EXPIRE_TIMER_INITIAL_DELAY = 900L;  // 15min
 
     private List<ServiceInstance> registry = new CopyOnWriteArrayList<>();
     private long registryId = Math.round(Math.random() * 100000D);

@@ -5,9 +5,6 @@ import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
 
-/**
- * Created by victor on 22/05/16.
- */
 @Ignore("unstable")
 class UnregisterIntegrationTest {
 

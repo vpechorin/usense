@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeoutException;
 public class Usense {
     private static final Logger log = LoggerFactory.getLogger(Usense.class);
 
-    private long BROWSE_INTERVAL = 30000L;
+    private long BROWSE_INTERVAL = 120000L;
 
     private Long id = Math.round(Math.random() * 1000000D);
     private ServiceInstance serviceInstance;
@@ -178,14 +179,31 @@ public class Usense {
 
     public List<ServiceInstance> findAllServiceInstances(String name) {
         List<ServiceInstance> result = this.registry.findAll(name);
+
         if (result == null || result.isEmpty()) {
             log.warn("Nothing found in registry, trying to browse all");
+
+            CountDownLatch latch = new CountDownLatch(1);
+
+            nats.subscribe("discovery.browse.reply", msg -> {
+                String messageText = new String(msg.getData());
+                log.debug("Received reply: {}", messageText);
+                ServiceInstance serviceInstance = ServiceInstance.fromString(messageText);
+                if (serviceInstance.getName().equalsIgnoreCase(name)) {
+                    if (serviceInstance != null)
+                        registry.addOrUpdate(serviceInstance);
+                    latch.countDown();
+                }
+            });
+
             this.browse();
+
             try {
-                Thread.sleep(200);
+                latch.await(200L, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
-                log.warn("Sleep error", e);
+                log.warn("Await error", e);
             }
+
             result = this.registry.findAll(name);
         }
 
